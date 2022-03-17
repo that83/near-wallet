@@ -4,3 +4,7 @@ export const byAccountIdAdapter = createEntityAdapter({
     selectId: ({ accountId }) => accountId,
 });
 
+export const byAccountIdInitialState = {
+    byAccountId: byAccountIdAdapter.getInitialState()
+};
+

@@ -8,7 +8,6 @@ import { getTransactions, transactionExtraInfo } from '../../../utils/explorer-a
 import handleAsyncThunkStatus from '../../reducerStatus/handleAsyncThunkStatus';
 import initialStatusState from '../../reducerStatus/initialState/initialStatusState';
 import { basicPath, byAccountIdInitialState, customAdapterByIdSelector, customAdapterSelectors, handleByAccountId, sliceByAccountIdSelectors } from '../../byAccountIdAdapter/byAccountIdAdapter';
-import handleAsyncThunkStatus from '../handleAsyncThunkStatus';
 
 const SLICE_NAME = 'transactions';
 

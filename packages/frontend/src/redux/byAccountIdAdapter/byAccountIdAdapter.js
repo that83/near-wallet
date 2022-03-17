@@ -1,4 +1,4 @@
-import { createEntityAdapter } from "@reduxjs/toolkit";
+import { createEntityAdapter, isPending } from "@reduxjs/toolkit";
 
 export const byAccountIdAdapter = createEntityAdapter({
     selectId: ({ accountId }) => accountId,
@@ -16,7 +16,7 @@ export const handleByAccountId = ({
     builder
 }) => builder
     .addMatcher(
-        (action) => action.type === `${asyncThunk.typePrefix}/pending`,
+        isPending(asyncThunk),
         (state, { meta }) => {
             const { accountId } = meta.arg;
             

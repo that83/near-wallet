@@ -8,17 +8,16 @@ import { getTransactions, transactionExtraInfo } from '../../../utils/explorer-a
 import handleAsyncThunkStatus from '../../reducerStatus/handleAsyncThunkStatus';
 import initialStatusState from '../../reducerStatus/initialState/initialStatusState';
 import { basicPath, byAccountIdInitialState, customAdapterByIdSelector, customAdapterSelectors, handleByAccountId, sliceByAccountIdSelectors } from '../../byAccountIdAdapter/byAccountIdAdapter';
+import { createSelector } from 'reselect';
 
 const SLICE_NAME = 'transactions';
 
-const initialState = {
-    ...byAccountIdInitialState
-};
-    
 const transactionsAdapter = createEntityAdapter({
     selectId: ({ hash_with_index }) => hash_with_index,
     sortComparer: (a, b) => b.block_timestamp - a.block_timestamp,
 });
+
+const initialState = byAccountIdInitialState;
 
 const initialAccountIdState = {
     ...initialStatusState,
@@ -91,6 +90,7 @@ export const actions = {
     ...transactionsSlice.actions
 };
 
+// entity adapter selectors
 export const {
     selectAll: selectTransactionsByAccountId,
     selectTotal: selectTransactionsByAccountIdTotal
@@ -98,4 +98,15 @@ export const {
 
 export const selectTransactionsOneByIdentity = customAdapterByIdSelector(transactionsAdapter, SLICE_NAME);
 
-export const selectTransactionsLoading = (state, { accountId }) => sliceByAccountIdSelectors(SLICE_NAME, state, accountId)?.status?.loading;
+// status selectors
+export const selectTransactionsObject = (state, { accountId }) => sliceByAccountIdSelectors(SLICE_NAME, state, accountId);
+
+export const selectTransactionsStatus = createSelector(
+    selectTransactionsObject,
+    (transactions) => transactions.status || {}
+)
+
+export const selectTransactionsLoadingXXX = createSelector(
+    selectTransactionsStatus,
+    (status) => status.loading || false
+)

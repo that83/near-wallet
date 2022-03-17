@@ -31,7 +31,7 @@ export const handleByAccountId = ({
 
 export const byAccountIdSelectors = (sliceName) => byAccountIdAdapter.getSelectors((state) => state[sliceName].byAccountId);
 
-export const sliceByAccountIdSelectors = (sliceName, state, accountId) => byAccountIdSelectors(sliceName).selectById(state, accountId);
+export const sliceByAccountIdSelectors = (sliceName, state, accountId) => byAccountIdSelectors(sliceName).selectById(state, accountId) || {};
 
 export const customAdapterSelectors = (adapter, sliceName) => adapter.getSelectors((state, { accountId }) => sliceByAccountIdSelectors(sliceName, state, accountId)?.items || state[sliceName].byAccountId);
 

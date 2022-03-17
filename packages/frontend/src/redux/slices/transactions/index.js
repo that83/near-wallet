@@ -58,18 +58,13 @@ const transactionsSlice = createSlice({
     name: SLICE_NAME,
     initialState,
     reducers: {
-        setTransactions(state, action) {
-            const { transactions, accountId } = action.payload;
-
+        setTransactions(state, { payload: { accountId, transactions }}) {
             transactionsAdapter.setAll(basicPath(state, accountId).items, transactions);
         },
-        updateTransactions(state, action) {
-            const { transactions, accountId } = action.payload;
-
+        updateTransactions(state, { payload: { accountId, transactions }}) {
             transactionsAdapter.upsertMany(basicPath(state, accountId).items, transactions);
         },
-        updateTransactionStatus(state, { payload }) {
-            const { status, checkStatus, accountId, hash_with_index } = payload;
+        updateTransactionStatus(state, { payload: { status, checkStatus, accountId, hash_with_index }}) {
             transactionsAdapter.updateOne(basicPath(state, accountId).items, { id: hash_with_index, changes: { status, checkStatus } });
         },
     },

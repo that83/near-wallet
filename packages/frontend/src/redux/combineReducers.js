@@ -28,12 +28,12 @@ export default (history) => combineReducers({
     [nftSlice.name]: nftSlice.reducer,
     [tokenFiatValuesSlice.name]: tokenFiatValuesSlice.reducer,
     [linkdropSlice.name]: linkdropSlice.reducer,
-    [transactionsSlice.name]: transactionsSlice.reducer,
     [tokensSlice.name]: tokensSlice.reducer,
     [flowLimitationSlice.name]: flowLimitationSlice.reducer,
     [createFromImplicitSlice.name]: createFromImplicitSlice.reducer,
     [recoveryMethodsSlice.name]: recoveryMethodsSlice.reducer,
     [availableAccountsSlice.name]: availableAccountsSlice.reducer,
     [ledgerSlice.name]: ledgerSlice.reducer,
+    [transactionsSlice.name]: transactionsSlice.reducer,
     router: connectRouter(history)
 });

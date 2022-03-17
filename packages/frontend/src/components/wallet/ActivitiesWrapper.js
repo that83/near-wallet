@@ -7,7 +7,7 @@ import { EXPLORER_URL } from '../../config';
 import { selectAccountId } from '../../redux/slices/account';
 import {
     actions as transactionsActions,
-    selectOneTransactionByIdentity,
+    selectTransactionsOneByIdentity,
     selectTransactionsByAccountId,
     selectTransactionsLoading,
 } from '../../redux/slices/transactions';
@@ -96,7 +96,7 @@ const ActivitiesWrapper = () => {
 
     const accountId = useSelector((state) => selectAccountId(state));
     const transactions = useSelector((state) => selectTransactionsByAccountId(state, { accountId }));
-    const transaction = useSelector((state) => selectOneTransactionByIdentity(state, { accountId, hash: transactionHash }));
+    const transaction = useSelector((state) => selectTransactionsOneByIdentity(state, { accountId, id: transactionHash }));
     const activityLoader = useSelector((state) => selectTransactionsLoading(state, { accountId }));
 
     useEffect(() => {

@@ -10,17 +10,15 @@ export const byAccountIdInitialState = {
 
 export const basicPath = (state, accountId) => state.byAccountId.entities[accountId];
 
-export const handleByAccountId = ({
-    asyncThunk,
-    initialState,
-    builder
-}) => builder
-    .addMatcher(
-        isPending(asyncThunk),
-        (state, { meta: { arg: { accountId }}}) => 
+export const handleByAccountId = ({ asyncThunk, initialState, builder }) => builder.addMatcher(
+    isPending(asyncThunk),
+    (state, { meta: { arg: { accountId }}}) => {
+        !basicPath(state, accountId) 
             !basicPath(state, accountId) 
-                && byAccountIdAdapter.upsertOne(state.byAccountId, { accountId, ...initialState })
-    );
+        !basicPath(state, accountId) 
+            && byAccountIdAdapter.upsertOne(state.byAccountId, { accountId, ...initialState })
+    }
+);
 
 export const byAccountIdSelectors = (sliceName) => byAccountIdAdapter.getSelectors((state) => state[sliceName].byAccountId);
 

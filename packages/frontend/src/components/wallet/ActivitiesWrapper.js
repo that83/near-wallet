@@ -9,7 +9,7 @@ import {
     actions as transactionsActions,
     selectTransactionsOneByIdentity,
     selectTransactionsByAccountId,
-    selectTransactionsLoading,
+    selectTransactionsLoading
 } from '../../redux/slices/transactions';
 import classNames from '../../utils/classNames';
 import FormButton from '../common/FormButton';

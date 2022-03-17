@@ -7,7 +7,7 @@ import {
 import { getTransactions, transactionExtraInfo } from '../../../utils/explorer-api';
 import handleAsyncThunkStatus from '../../reducerStatus/handleAsyncThunkStatus';
 import initialStatusState from '../../reducerStatus/initialState/initialStatusState';
-import { basicPath, byAccountIdInitialState, customAdapterByIdSelector, customAdapterSelectors, handleByAccountId, sliceByAccountIdSelectors } from '../../byAccountIdAdapter/byAccountIdAdapter';
+import { basicPath, byAccountIdInitialState, customAdapterByIdSelector, customAdapterSelectors, handleByAccountId, sliceByAccountId } from '../../byAccountIdAdapter/byAccountIdAdapter';
 import { createSelector } from 'reselect';
 
 const SLICE_NAME = 'transactions';
@@ -98,7 +98,7 @@ export const {
 export const selectTransactionsOneByIdentity = customAdapterByIdSelector(transactionsAdapter, SLICE_NAME);
 
 // status selectors
-export const selectTransactionsObject = (state, { accountId }) => sliceByAccountIdSelectors(SLICE_NAME, state, accountId);
+export const selectTransactionsObject = (state, { accountId }) => sliceByAccountId(SLICE_NAME, state, accountId);
 
 export const selectTransactionsStatus = createSelector([selectTransactionsObject], (transactions) => transactions.status || {});
 

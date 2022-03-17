@@ -39,7 +39,7 @@ export const fetchTransactions = createAsyncThunk(
 
 export const fetchTransactionStatus = createAsyncThunk(
     `${SLICE_NAME}/fetchTransactionStatus`,
-    async ({ hash, signer_id, accountId, hash_with_index }, { dispatch, getState }) => {
+    async ({ hash, signer_id, accountId, hash_with_index }, { dispatch }) => {
         let status;
         try {
             const transactionDetails = await transactionExtraInfo({ hash, signer_id });
@@ -81,7 +81,6 @@ const transactionsSlice = createSlice({
     })
 });
 
-
 export default transactionsSlice;
 
 export const actions = {
@@ -101,12 +100,6 @@ export const selectTransactionsOneByIdentity = customAdapterByIdSelector(transac
 // status selectors
 export const selectTransactionsObject = (state, { accountId }) => sliceByAccountIdSelectors(SLICE_NAME, state, accountId);
 
-export const selectTransactionsStatus = createSelector(
-    selectTransactionsObject,
-    (transactions) => transactions.status || {}
-)
+export const selectTransactionsStatus = createSelector([selectTransactionsObject], (transactions) => transactions.status || {});
 
-export const selectTransactionsLoadingXXX = createSelector(
-    selectTransactionsStatus,
-    (status) => status.loading || false
-)
+export const selectTransactionsLoading = createSelector(selectTransactionsStatus, (status) => status.loading || false);

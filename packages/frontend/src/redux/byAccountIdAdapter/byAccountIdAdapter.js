@@ -17,16 +17,9 @@ export const handleByAccountId = ({
 }) => builder
     .addMatcher(
         isPending(asyncThunk),
-        (state, { meta }) => {
-            const { accountId } = meta.arg;
-            
-            if (basicPath(state, accountId)) {
-                return;
-            }
-
-            byAccountIdAdapter.addOne(state.byAccountId, { accountId });
-            byAccountIdAdapter.upsertOne(state.byAccountId, { accountId, ...initialState });
-        }
+        (state, { meta: { arg: { accountId }}}) => 
+            !basicPath(state, accountId) 
+                && byAccountIdAdapter.upsertOne(state.byAccountId, { accountId, ...initialState })
     );
 
 export const byAccountIdSelectors = (sliceName) => byAccountIdAdapter.getSelectors((state) => state[sliceName].byAccountId);

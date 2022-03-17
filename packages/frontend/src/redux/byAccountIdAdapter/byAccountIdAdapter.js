@@ -10,3 +10,22 @@ export const byAccountIdInitialState = {
 
 export const basicPath = (state, accountId) => state.byAccountId.entities[accountId];
 
+export const handleByAccountId = ({
+    asyncThunk,
+    initialState,
+    builder
+}) => builder
+    .addMatcher(
+        (action) => action.type === `${asyncThunk.typePrefix}/pending`,
+        (state, { meta }) => {
+            const { accountId } = meta.arg;
+            
+            if (basicPath(state, accountId)) {
+                return;
+            }
+
+            byAccountIdAdapter.addOne(state.byAccountId, { accountId });
+            byAccountIdAdapter.upsertOne(state.byAccountId, { accountId, ...initialState });
+        }
+    );
+

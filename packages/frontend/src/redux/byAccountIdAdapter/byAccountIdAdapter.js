@@ -1,4 +1,4 @@
-import { createEntityAdapter, isPending } from "@reduxjs/toolkit";
+import { createEntityAdapter, isPending } from '@reduxjs/toolkit';
 
 export const byAccountIdAdapter = createEntityAdapter({
     selectId: ({ accountId }) => accountId,
@@ -14,7 +14,7 @@ export const handleByAccountId = ({ asyncThunk, initialState, builder }) => buil
     isPending(asyncThunk),
     (state, { meta: { arg: { accountId }}}) => {
         !basicPath(state, accountId) 
-            && byAccountIdAdapter.upsertOne(state.byAccountId, { accountId, ...initialState })
+            && byAccountIdAdapter.upsertOne(state.byAccountId, { accountId, ...initialState });
     }
 );
 

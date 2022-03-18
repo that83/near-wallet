@@ -3,12 +3,12 @@ import {
     createSlice,
     createAsyncThunk
 } from '@reduxjs/toolkit';
+import { createSelector } from 'reselect';
 
 import { getTransactions, transactionExtraInfo } from '../../../utils/explorer-api';
+import { basicPath, byAccountIdInitialState, customAdapterByIdSelector, customAdapterSelectors, handleByAccountId, sliceByAccountId } from '../../byAccountIdAdapter/byAccountIdAdapter';
 import handleAsyncThunkStatus from '../../reducerStatus/handleAsyncThunkStatus';
 import initialStatusState from '../../reducerStatus/initialState/initialStatusState';
-import { basicPath, byAccountIdInitialState, customAdapterByIdSelector, customAdapterSelectors, handleByAccountId, sliceByAccountId } from '../../byAccountIdAdapter/byAccountIdAdapter';
-import { createSelector } from 'reselect';
 
 const SLICE_NAME = 'transactions';
 

@@ -100,6 +100,6 @@ export const selectTransactionsOneByIdentity = customAdapterByIdSelector(transac
 // status selectors
 export const selectTransactionsObject = (state, { accountId }) => sliceByAccountId(SLICE_NAME, state, accountId);
 
-export const selectTransactionsStatus = createSelector([selectTransactionsObject], (transactions) => transactions.status || {});
+export const selectTransactionsStatus = createSelector([selectTransactionsObject], (transactions) => transactions.status || initialStatusState);
 
-export const selectTransactionsLoading = createSelector(selectTransactionsStatus, (status) => status.loading || false);
+export const selectTransactionsLoading = createSelector(selectTransactionsStatus, (status) => status.loading || initialStatusState.loading);

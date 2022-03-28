@@ -40,10 +40,10 @@ export default ({
             </h2>
             <LedgerHdPaths
                 path={path}
-                onSetPath={path => setPath(path)}
+                onSetPath={(path) => setPath(path)}
                 onConfirmHdPath={() => {
                     setConfirmedPath(path);
-                    Mixpanel.track("SR-Ledger Setup set custom HD path");
+                    Mixpanel.track('SR-Ledger Setup set custom HD path');
                 }}
             />
             <FormButton onClick={()=>{

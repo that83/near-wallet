@@ -16,6 +16,7 @@ import {
 import { showCustomAlert } from '../../../redux/actions/status';
 import { selectAccountSlice } from '../../../redux/slices/account';
 import { createNewAccount } from '../../../redux/slices/account/createAccountThunks';
+import {actions as ledgerActions } from '../../../redux/slices/ledger';
 import { actions as linkdropActions } from '../../../redux/slices/linkdrop';
 import { selectStatusMainLoader } from '../../../redux/slices/status';
 import { getLedgerHDPath } from '../../../utils/ledger';
@@ -30,7 +31,7 @@ import InstructionsModal from './InstructionsModal';
 import LedgerHdPaths from './LedgerHdPaths';
 
 const { setLinkdropAmount } = linkdropActions;
-
+const { checkAndHideLedgerModal } = ledgerActions;
 // FIXME: Use `debug` npm package so we can keep some debug logging around but not spam the console everywhere
 const ENABLE_DEBUG_LOGGING = false;
 const debugLog = (...args) => ENABLE_DEBUG_LOGGING && console.log('SetupLedger:', ...args);
@@ -99,12 +100,15 @@ const SetupLedger = (props) => {
                             return;
                         }
 
-                        await dispatch(createNewAccount({ accountId, fundingOptions, recoveryMethod: 'ledger', publicKey, recaptchaToken })).unwrap();
+                        await dispatch(createNewAccount({ accountId, fundingOptions, recoveryMethod: 'ledger', publicKey, recaptchaToken, path: customLedgerHdPath, handleCloseModal:()=>{
+                            dispatch(checkAndHideLedgerModal());
+                        } })).unwrap();
                         if (fundingOptions?.fundingAmount) {
                             setLinkdropAmount(fundingOptions.fundingAmount);
                         }
                         Mixpanel.track('SR-Ledger Create new account ledger');
                     } catch (err) {
+                        console.log(err);
                         if (isRetryableRecaptchaError(err)) {
                             Mixpanel.track('Funded account creation failed due to invalid / expired reCaptcha response from user');
                             recaptchaRef.current.reset();
@@ -119,7 +123,7 @@ const SetupLedger = (props) => {
                             Mixpanel.track('SR-Ledger NotEnoughBalance creating funded account');
                             dispatch(fundCreateAccountLedger(accountId, publicKey));
                         } else {
-                            recaptchaRef.current.reset();
+                            recaptchaRef?.current?.reset();
 
                             dispatch(showCustomAlert({
                                 errorMessage: err.message,

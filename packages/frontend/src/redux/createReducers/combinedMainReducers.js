@@ -14,17 +14,22 @@ import linkdropSlice from '../slices/linkdrop';
 import nftSlice from '../slices/nft';
 import recoveryMethodsSlice from '../slices/recoveryMethods';
 import tokenFiatValuesSlice from '../slices/tokenFiatValues';
+import tokensMetadataSlice from '../slices/tokensMetadata';
 import transactionsSlice from '../slices/transactions';
 
 export default (history) => ({
+    // shared reducers
     localize: localizeReducer,
+    router: connectRouter(history),
+    [tokenFiatValuesSlice.name]: tokenFiatValuesSlice.reducer,
+    [tokensMetadataSlice.name]: tokensMetadataSlice.reducer,
+    // account reducers
     allAccounts,
     account,
     sign,
     staking,
     status,
     [nftSlice.name]: nftSlice.reducer,
-    [tokenFiatValuesSlice.name]: tokenFiatValuesSlice.reducer,
     [linkdropSlice.name]: linkdropSlice.reducer,
     [transactionsSlice.name]: transactionsSlice.reducer,
     [flowLimitationSlice.name]: flowLimitationSlice.reducer,
@@ -32,5 +37,4 @@ export default (history) => ({
     [recoveryMethodsSlice.name]: recoveryMethodsSlice.reducer,
     [availableAccountsSlice.name]: availableAccountsSlice.reducer,
     [ledgerSlice.name]: ledgerSlice.reducer,
-    router: connectRouter(history)
 });

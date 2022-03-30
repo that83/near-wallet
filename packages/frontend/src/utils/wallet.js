@@ -547,8 +547,6 @@ class Wallet {
 
     async getLedgerAccountIds({ path }) {
         const publicKey = await this.getLedgerPublicKey(path);
-
-        // TODO: getXXX methods shouldn't be modifying the state
         await setKeyMeta(publicKey, { type: 'ledger' });
 
         let accountIds;

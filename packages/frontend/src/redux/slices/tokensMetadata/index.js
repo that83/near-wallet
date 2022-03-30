@@ -32,17 +32,12 @@ const tokensMetadataSlice = createSlice({
 
 export default tokensMetadataSlice;
 
-export const actions = {
-    ...tokensMetadataSlice.actions
-};
-export const reducer = tokensMetadataSlice.reducer;
-
 // Top level selectors
 const selectTokensMetadataSlice = (state) => state[SLICE_NAME] || initialState;
 
 const getContractNameParam = createParameterSelector((params) => params.contractName);
 
-export const selectContractsMetadata = createSelector(selectTokensMetadataSlice, ({ byContractName }) => byContractName || {});
+export const selectContractsMetadata = createSelector(selectTokensMetadataSlice, ({ byContractName }) => byContractName);
 
 export const selectOneContractMetadata = createSelector(
     [selectContractsMetadata, getContractNameParam],

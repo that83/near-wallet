@@ -146,7 +146,6 @@ export function SignInLedger(props) {
 
             <FormButton
                 className='link red'
-                style={{height:'50px'}}
                 onClick={() => props.history.goBack()}
                 trackingId='IE-Ledger Click cancel button'
             >

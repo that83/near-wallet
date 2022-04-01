@@ -18,7 +18,7 @@
     "lerna": "^4.0.0"
   },
   "dependencies": {
-    "@near-wallet/feature-flags": "^0.0.4"
+    "@near-wallet/feature-flags": "^0.1.0"
   },
   "config": {
     "commitizen": {

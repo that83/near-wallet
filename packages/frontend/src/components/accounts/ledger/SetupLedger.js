@@ -16,6 +16,7 @@ import {
 import { showCustomAlert } from '../../../redux/actions/status';
 import { selectAccountSlice } from '../../../redux/slices/account';
 import { createNewAccount } from '../../../redux/slices/account/createAccountThunks';
+import {actions as ledgerActions } from '../../../redux/slices/ledger';
 import { actions as linkdropActions } from '../../../redux/slices/linkdrop';
 import { selectStatusMainLoader } from '../../../redux/slices/status';
 import { getLedgerHDPath } from '../../../utils/ledger';
@@ -31,6 +32,8 @@ import InstructionsModal from './InstructionsModal';
 import LedgerHdPaths from './LedgerHdPaths';
 
 const { setLinkdropAmount } = linkdropActions;
+const { checkAndHideLedgerModal } = ledgerActions;
+
 // FIXME: Use `debug` npm package so we can keep some debug logging around but not spam the console everywhere
 const ENABLE_DEBUG_LOGGING = false;
 const debugLog = (...args) => ENABLE_DEBUG_LOGGING && console.log('SetupLedger:', ...args);
@@ -107,6 +110,7 @@ const SetupLedger = (props) => {
                         if (fundingOptions?.fundingAmount) {
                             setLinkdropAmount(fundingOptions.fundingAmount);
                         }
+                        dispatch(checkAndHideLedgerModal());
                         Mixpanel.track('SR-Ledger Create new account ledger');
                     } catch (err) {
                         if (isRetryableRecaptchaError(err)) {

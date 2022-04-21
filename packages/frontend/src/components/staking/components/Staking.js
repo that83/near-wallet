@@ -3,6 +3,7 @@ import React from 'react';
 import { Translate } from 'react-localize-redux';
 import { useSelector } from 'react-redux';
 
+import selectCollectedAvailableForClaimData from '../../../redux/crossStateSelectors/selectCollectedAvailableForClaimData';
 import selectNEARAsTokenWithMetadata from '../../../redux/crossStateSelectors/selectNEARAsTokenWithMetadata';
 import FormButton from '../../common/FormButton';
 import SkeletonLoading from '../../common/SkeletonLoading';
@@ -30,7 +31,7 @@ export default function Staking({
     multipleAccounts
 }) {
     const NEARAsTokenWithMetadata = useSelector(selectNEARAsTokenWithMetadata);
-
+    const collectedFarmData = useSelector(selectCollectedAvailableForClaimData);
     return (
         <>
             <h1><Translate id='staking.staking.title' /></h1>
@@ -55,7 +56,7 @@ export default function Staking({
                 className='account-loader'
             />
             <FormButton
-                disabled={loadingDetails}
+                disabled={loadingDetails || !activeAccount.accountId}
                 linkTo='/staking/validators'
                 trackingId="STAKE Click stake my tokens button"
                 data-test-id="stakeMyTokensButton"
@@ -105,6 +106,26 @@ export default function Staking({
                     />
                 </>
                 : null}
+            {!loading && collectedFarmData
+                .filter((tokenData) => +tokenData.balance > 0)
+                .map((tokenData, i) => {
+                return (
+                    <BalanceBox
+                        title={!i && 'staking.balanceBox.farmed.title'}
+                        info={!i && 'staking.balanceBox.farmed.info'}
+                        key={tokenData.contractName}
+                        token={{
+                            onChainFTMetadata: tokenData.onChainFTMetadata,
+                            fiatValueMetadata: tokenData.fiatValueMetadata,
+                            balance: tokenData.balance,
+                            contractName: tokenData.contractName,
+                            isWhiteListed: tokenData.isWhiteListed
+                        }}
+                        button="staking.balanceBox.farm.button"
+                        hideBorder={collectedFarmData.length > 1 && i < (collectedFarmData.length - 1)}
+                />
+                );
+            })}
             <h3><Translate id='staking.staking.currentValidators' /></h3>
             {!loadingDetails
                 ? currentValidators.length
@@ -118,7 +139,7 @@ export default function Staking({
                             />
                         )}
                     </ListWrapper>
-                    : <NoValidators />
+                    : <NoValidators accountId={activeAccount.accountId}/>
                 : <SkeletonLoading
                     height='200px'
                     show={true}

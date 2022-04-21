@@ -304,7 +304,7 @@ export const {
     ],
     DISABLE_MULTISIG: [
         (...args) => twoFactorMethod('disableMultisig', wallet, args),
-        () => ({})
+        () => showAlert()
     ],
     CHECK_CAN_ENABLE_TWO_FACTOR: [
         (...args) => TwoFactor.checkCanEnableTwoFactor(...args),
@@ -593,8 +593,7 @@ export const { makeAccountActive, refreshAccountExternal, refreshUrl, updateStak
             }
         }),
         (accountId) => ({
-            accountId,
-            ...showAlert({ onlyError: true, data: { accountId } })
+            accountId
         })
     ],
     REFRESH_URL: null,

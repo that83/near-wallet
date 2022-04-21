@@ -70,7 +70,7 @@
             "orAskFriend": "or ask a friend!",
             "orSendNear": "...or send at least ${amount} NEAR to your wallet address.",
             "sendFrom": "Send from an",
-            "title": "Almost there! To get started, buy some NEAR using MoonPay...",
+            "title": "Almost there! To get started, buy some NEAR using one of providers...",
             "titleAlt": "Almost there! To get started, send at least ${amount} NEAR to your wallet address."
         },
         "fundedStatus": {
@@ -234,6 +234,7 @@
         "staking": "Staking",
         "startOver": "Bắt đầu lại",
         "subscribe": "Đăng ký",
+        "swap": "Tráo đổi",
         "transferring": "Đang chuyển tiền",
         "unstaking": "Unstaking",
         "verify": "Xác minh & Hoàn thành",
@@ -249,14 +250,16 @@
         "bridgeTokens": "Bridge Tokens from Ethereum",
         "buyWith": "Mua với",
         "coinMarketCap": "CoinMarketCap",
-        "descOne": "Mua NEAR qua MoonPay bằng phương thức thanh toán ưa thích của bạn.",
+        "descMoonpay": "Mua NEAR qua MoonPay bằng phương thức thanh toán ưa thích của bạn.",
         "descThree": "Transfer your tokens from Ethereum to NEAR Wallet using a bridge.",
         "descTwo": "NEAR có sẵn để mua thông qua các sàn giao dịch sau.",
+        "descUtorg": "Mua NEAR qua Utorg bằng phương thức thanh toán ưa thích của bạn.",
         "moonPay": "MoonPay",
         "notSupported": "is not supported in your region",
         "seeMore": "Xem thêm trên",
         "supportedExchanges": "Các sàn giao dịch được hỗ trợ",
-        "title": "Mua NEAR"
+        "title": "Mua NEAR",
+        "utorg": "Utorg"
     },
     "confirmLedgerModal": {
         "header": {
@@ -416,6 +419,20 @@
         },
         "title": "Thiêt bị ổ cứng"
     },
+    "importAccountWithLink": {
+        "accountFound": "1 Account Found",
+        "accountImported": "Account Imported",
+        "accountsFound": "${count} Accounts Found",
+        "alreadyImported": "The account secured by this link has been imported.",
+        "continue": "and continue this process in your browser of choice.",
+        "copyUrl": "copy the URL",
+        "foundAccount": "We found <b>1 account</b> secured by this link.",
+        "foundAccounts": "We found <b>${count} accounts</b> secured by this link.",
+        "goToAccount": "Go to Account",
+        "import": "Import",
+        "importAccount": "Import Your Account",
+        "preferedBrowser": "If this isn't your preferred browser,"
+    },
     "initialDeposit": {
         "claimAccount": {
             "desc": "Your deposit was received! Once claimed, your deposit will be transferred to your new account.",
@@ -494,9 +511,6 @@
         },
         "or": "or",
         "title": "Bạn đã nhận được một NEAR Drop!"
-    },
-    "NFTTransfer": {
-        "youSent": "You sent <span class='color-blue'>${title}</span> to <span class='color-green'>${receiverId}</span>"
     },
     "loading": "Đang tải...",
     "lockedBalance": "NEAR đang bị khóa trong hợp đồng khóa và không thể rút. Bạn vẫn có thể ủy quyền hoặc stake NEAR này. Khi NEAR được mở khóa, bạn có thể xem nó trong số dư đã mở khóa của bạn và chọn rút nó (chuyển sang số dư khả dụng của bạn).",
@@ -584,6 +598,9 @@
         "desc": "Ví này (và mạng lưới) chỉ dành cho mục đích thử nghiệm. Token và các tài sản khác không có giá trị. Các tài khoản được tạo không thể chuyển sang Mainnet.",
         "header": "NEAR thử nghiệm Ví",
         "title": "Ví chỉ thử nghiệm"
+    },
+    "NFTTransfer": {
+        "youSent": "You sent <span class='color-blue'>${title}</span> to <span class='color-green'>${receiverId}</span>"
     },
     "nodeDetails": {
         "pageText": "Cập nhật thông tin chi tiết về node của bạn.",
@@ -738,20 +755,6 @@
         "pTwo": "Nếu đây không phải là trình duyệt ưa thích của bạn, hãy sao chép URL và hoàn tất quá trình này trong trình duyệt mà bạn muốn.",
         "snackbarCopySuccess": "Đã sao chép URL khôi phục",
         "title": "Khôi phục tài khoản"
-    },
-    "importAccountWithLink": {
-        "accountFound": "1 Account Found",
-        "accountsFound": "${count} Accounts Found",
-        "accountImported": "Account Imported",
-        "alreadyImported": "The account secured by this link has been imported.",
-        "copyUrl": "copy the URL",
-        "continue": "and continue this process in your browser of choice.",
-        "foundAccount": "We found <b>1 account</b> secured by this link.",
-        "foundAccounts": "We found <b>${count} accounts</b> secured by this link.",
-        "import": "Import",
-        "importAccount": "Import Your Account",
-        "preferedBrowser": "If this isn't your preferred browser,",
-        "goToAccount": "Go to Account"
     },
     "recoveryMgmt": {
         "disableInputPlaceholder": "Nhập ID tài khoản của bạn để xác nhận",
@@ -1085,6 +1088,10 @@
             "authorization": "đang yêu cầu ủy quyền",
             "transferOf": "đang yêu cầu chuyển"
         },
+        "multipleAccountsError": {
+            "body": "<a href=${signCallbackUrl} target='_blank' rel='noreferrer'>${signCallbackUrl}</a> has requested authorization from more than one account.<br/><br/>NEAR Wallet may only authorize transactions for a single account at a time.",
+            "title": "Batch Transaction Error"
+        },
         "nothingHasBeenTransferred": "Không có lệnh chuyển nào.",
         "transactionCancelled": "Giao dịch đã được hủy",
         "transferring": "Đang chuyển",
@@ -1263,6 +1270,17 @@
     },
     "stakingPoolUnstaked": "NEAR này hiện đang ở trong một pool staking nhưng chưa được unstake và sẽ ở trạng thái đang chờ xử lý khi bạn unstake.",
     "success": "Thành công",
+    "swap": {
+        "AvailableToSwap": "Có sẵn để hoán đổi",
+        "ExpectedPrice": "Giá cả dự kiến",
+        "from": "Từ",
+        "MinimumReceived": "Số tiền nhận được tối thiểu",
+        "pairPrice": "Giá cặp",
+        "slipPage": "Khả năng chịu trượt",
+        "slippageError": "từ 1 đến 50",
+        "to": "Đến",
+        "TradingFee": "Phí giao dịch"
+    },
     "topLevelAccounts": {
         "body": "Tên tài khoản tương tự như tên miền. Chỉ tài khoản ${data} mới có thể tạo các tài khoản như tên của bạn.${data}, và chỉ tên của bạn.${data} có thể tạo app.yourname.${data}. Tất cả các tài khoản được tạo trong ví này đều sử dụng .${data} Tài khoản cấp cao nhất (TLA). Để tìm hiểu thêm về tên tài khoản và tạo TLA của riêng bạn, truy cập <a rel='noopener noreferrer' href='https://docs.nearprotocol.com/docs/concepts/account'>trang tài liệu</a>.",
         "header": "Tài khoản cấp cao nhất"

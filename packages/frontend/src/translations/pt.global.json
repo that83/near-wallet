@@ -47,6 +47,11 @@
                     "title": "Adicionar saldo com MoonPay"
                 },
                 "title": "Coloque fundos em sua Conta",
+                "utorg": {
+                    "buyWith": "Comprar com",
+                    "desc": "Faça seu depósito inicial via Utorg utilizado seu método de pagamento preferido.",
+                    "title": "Adicionar saldo com Utorg"
+                },
                 "whereToBuy": {
                     "button": "Onde consigo comprar NEAR?",
                     "desc": "NEAR tokens estão disponíveis para compra nas seguintes exchanges",
@@ -76,7 +81,7 @@
             "orAskFriend": "or ask a friend!",
             "orSendNear": "...or send at least ${amount} NEAR to your wallet address.",
             "sendFrom": "Send from an",
-            "title": "Almost there! To get started, buy some NEAR using MoonPay...",
+            "title": "Almost there! To get started, buy some NEAR using one of providers...",
             "titleAlt": "Almost there! To get started, send at least ${amount} NEAR to your wallet address."
         },
         "fundedStatus": {
@@ -256,6 +261,7 @@
         "staking": "Staking",
         "startOver": "Iniciar novamente",
         "subscribe": "Inscrever-se",
+        "swap": "Troca",
         "topUp": "Top Up",
         "transferring": "Transferindo",
         "tryAgain": "Tentar Novamente",
@@ -274,13 +280,15 @@
         "bridgeTokens": "Fazer ponte de tokens do Ethereum",
         "buyWith": "Comprar com",
         "coinMarketCap": "CoinMarketCap",
-        "descOne": "Compre NEAR pela MoonPay usando seu método de pagamento preferido.",
+        "descMoonpay": "Compre NEAR pela MoonPay usando seu método de pagamento preferido.",
         "descThree": "Transfira seus tokens do Ethereum para a carteira NEAR usando uma ponte.",
         "descTwo": "NEAR está disponível para compra nas seguintes exchanges.",
+        "descUtorg": "Compre NEAR pela Utorg usando seu método de pagamento preferido.",
         "moonPay": "MoonPay",
         "seeMore": "Ver mais em",
         "supportedExchanges": "Exchanges suportadas",
-        "title": "Comprar NEAR"
+        "title": "Comprar NEAR",
+        "utorg": "Utorg"
     },
     "confirmLedgerModal": {
         "header": {
@@ -463,6 +471,20 @@
         "withId": "Importando conta: ${accountId}",
         "withIdFailed": "Falha ao importar conta: ${accountId}"
     },
+    "importAccountWithLink": {
+        "accountFound": "1 Account Found",
+        "accountImported": "Account Imported",
+        "accountsFound": "${count} Accounts Found",
+        "alreadyImported": "The account secured by this link has been imported.",
+        "continue": "and continue this process in your browser of choice.",
+        "copyUrl": "copy the URL",
+        "foundAccount": "We found <b>1 account</b> secured by this link.",
+        "foundAccounts": "We found <b>${count} accounts</b> secured by this link.",
+        "goToAccount": "Go to Account",
+        "import": "Import",
+        "importAccount": "Import Your Account",
+        "preferedBrowser": "If this isn't your preferred browser,"
+    },
     "initialDeposit": {
         "claimAccount": {
             "desc": "Seu depósito inicial foi recebido! Uma vez reivindicada, seu depósito será transferido para essa nova conta.",
@@ -543,9 +565,6 @@
         },
         "or": "ou",
         "title": "Você recebeu uma distribuição de NEAR!"
-    },
-    "NFTTransfer": {
-        "youSent": "You sent <span class='color-blue'>${title}</span> to <span class='color-green'>${receiverId}</span>"
     },
     "loading": "Carregando...",
     "loadingNoDots": "Carregando",
@@ -638,6 +657,9 @@
     "NFTs": {
         "emptyState": "Parece que você ainda não tem nenhum colecionável.",
         "loadMore": "Carregar mais"
+    },
+    "NFTTransfer": {
+        "youSent": "You sent <span class='color-blue'>${title}</span> to <span class='color-green'>${receiverId}</span>"
     },
     "nodeDetails": {
         "pageText": "Atualize os detalhes do seu nó.",
@@ -794,20 +816,6 @@
         "pTwo": "Se este não for o seu navegador preferido, copie a URL e complete este processo no navegador a sua escolha.",
         "snackbarCopySuccess": "URL de Recuperação copiada",
         "title": "Restaurar conta"
-    },
-    "importAccountWithLink": {
-        "accountFound": "1 Account Found",
-        "accountsFound": "${count} Accounts Found",
-        "accountImported": "Account Imported",
-        "alreadyImported": "The account secured by this link has been imported.",
-        "copyUrl": "copy the URL",
-        "continue": "and continue this process in your browser of choice.",
-        "foundAccount": "We found <b>1 account</b> secured by this link.",
-        "foundAccounts": "We found <b>${count} accounts</b> secured by this link.",
-        "import": "Import",
-        "importAccount": "Import Your Account",
-        "preferedBrowser": "If this isn't your preferred browser,",
-        "goToAccount": "Go to Account"
     },
     "recoveryMgmt": {
         "disableInputPlaceholder": "Insira o ID da sua conta para confirmar",
@@ -1155,6 +1163,10 @@
             "authorization": "está solicitando autorização",
             "transferOf": "está solicitando a transferência de"
         },
+        "multipleAccountsError": {
+            "body": "<a href=${signCallbackUrl} target='_blank' rel='noreferrer'>${signCallbackUrl}</a> has requested authorization from more than one account.<br/><br/>NEAR Wallet may only authorize transactions for a single account at a time.",
+            "title": "Batch Transaction Error"
+        },
         "nothingHasBeenTransferred": "Nada foi transferido.",
         "transactionCancelled": "Transação cancelada",
         "transferring": "Transferindo",
@@ -1337,9 +1349,21 @@
     },
     "stakingPoolUnstaked": "Este NEAR está atualmente em uma pool de stake, mas unstaked. Pode, por exemplo, estar em um estado de liberação pendente.",
     "success": "Sucesso",
+    "swap": {
+        "AvailableToSwap": "Disponível para troca",
+        "ExpectedPrice": "Preço esperado",
+        "from": "A partir de",
+        "MinimumReceived": "Mínimo recebido",
+        "pairPrice": "Preço do par",
+        "slipPage": "Tolerância de deslizamento",
+        "slippageError": "de 1 a 50",
+        "to": "Para",
+        "TradingFee": "Taxa de negociação"
+    },
     "sync": "Sincronizar",
     "tokenBox": {
-        "priceUnavailable": "Preço indisponível"
+        "priceUnavailable": "Preço indisponível",
+        "swapTo": "para"
     },
     "topLevelAccounts": {
         "body": "Nomes de contas são similares a nomes de domínio. Apenas a conta ${suffix} pode criar contas como seunome.${suffix}, e apenas seunome.${suffix} pode criar app.seunome.${suffix}. Todas as contas criadas nesta carteira usam a Conta Top Level (TLA) .${suffix} . Para saber mais sobre nomes de conta e criar sua própria TLA, visite a <a rel='noopener noreferrer' href='https://docs.nearprotocol.com/docs/concepts/account'>documentação</a>.",

@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 import { Redirect, Switch } from 'react-router-dom';
 import styled, { ThemeProvider } from 'styled-components';
 
-import { CREATE_IMPLICIT_ACCOUNT, IMPORT_ACCOUNT_WITH_LINK_V2 } from '../../../../features';
+import { CREATE_IMPLICIT_ACCOUNT, IMPORT_ACCOUNT_WITH_LINK_V2, CREATE_USN_CONTRACT } from '../../../../features';
 import TwoFactorVerifyModal from '../components/accounts/two_factor/TwoFactorVerifyModal';
 import { IS_MAINNET, PUBLIC_URL, SHOW_PRERELEASE_WARNING, DISABLE_CREATE_ACCOUNT } from '../config';
 import ExampleFlag from '../ExampleFlag';
@@ -27,10 +27,12 @@ import { SetupLedgerNewAccountWrapper } from '../routes/SetupLedgerNewAccountWra
 import { SetupPassphraseNewAccountWrapper } from '../routes/SetupPassphraseNewAccountWrapper';
 import { SetupRecoveryImplicitAccountWrapper } from '../routes/SetupRecoveryImplicitAccountWrapper';
 import { SignWrapper } from '../routes/SignWrapper';
+import { WalletWrapper } from '../routes/WalletWrapper';
 import translations_en from '../translations/en.global.json';
 import translations_pt from '../translations/pt.global.json';
 import translations_ru from '../translations/ru.global.json';
 import translations_tr from '../translations/tr.global.json';
+import translations_ua from '../translations/ua.global.json';
 import translations_vi from '../translations/vi.global.json';
 import translations_zh_hans from '../translations/zh-hans.global.json';
 import translations_zh_hant from '../translations/zh-hant.global.json';
@@ -73,20 +75,21 @@ import PublicRoute from './common/routing/PublicRoute';
 import Route from './common/routing/Route';
 import GlobalStyle from './GlobalStyle';
 import { LoginCliLoginSuccess } from './login/LoginCliLoginSuccess';
-import Navigation from './navigation/Navigation';
+import NavigationWrapper from './navigation/NavigationWrapper';
 import { NFTDetailWrapper } from './nft/NFTDetailWrapper';
 import { PageNotFound } from './page-not-found/PageNotFound';
 import { Profile } from './profile/Profile';
 import { ReceiveContainerWrapper } from './receive-money/ReceiveContainerWrapper';
 import { SendContainerWrapper } from './send/SendContainerWrapper';
 import { StakingContainer } from './staking/StakingContainer';
+import SwapContainerWrapper from './Swap/SwapContainerWrapper';
 import Terms from './terms/Terms';
-import { Wallet } from './wallet/Wallet';
 
 import '../index.css';
 
-const {
-    fetchTokenFiatValues
+const {    
+    fetchTokenFiatValues,
+    getTokenWhiteList
 } = tokenFiatValueActions;
 
 const {
@@ -131,6 +134,7 @@ const Container = styled.div`
         }
     }
 `;
+
 class Routing extends Component {
     constructor(props) {
         super(props);
@@ -144,7 +148,8 @@ class Routing extends Component {
             { name: 'Tiếng Việt', code: 'vi' },
             { name: '简体中文', code: 'zh-hans' },
             { name: '繁體中文', code: 'zh-hant' },
-            { name: 'Türkçe', code: 'tr' }
+            { name: 'Türkçe', code: 'tr' },
+            { name: 'Українська', code: 'ua' },
         ];
 
         const browserLanguage = getBrowserLocale(languages.map((l) => l.code));
@@ -176,6 +181,7 @@ class Routing extends Component {
         this.props.addTranslationForLanguage(translations_zh_hans, 'zh-hans');
         this.props.addTranslationForLanguage(translations_zh_hant, 'zh-hant');
         this.props.addTranslationForLanguage(translations_tr, 'tr');
+        this.props.addTranslationForLanguage(translations_ua, 'ua');
 
         this.props.setActiveLanguage(activeLang);
         // this.addTranslationsForActiveLanguage(defaultLanguage)
@@ -212,7 +218,11 @@ class Routing extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        const { activeLanguage } = this.props;
+        const { activeLanguage, account } = this.props;
+
+        if (prevProps.account.accountId !== account.accountId && account.accountId !== undefined) {
+            this.props.getTokenWhiteList(account.accountId);
+        }
 
         const prevLangCode = prevProps.activeLanguage && prevProps.activeLanguage.code;
         const curLangCode = activeLanguage && activeLanguage.code;
@@ -288,7 +298,7 @@ class Routing extends Component {
                         <NetworkBanner
                             account={account}
                         />
-                        <Navigation />
+                        <NavigationWrapper />
                         <GlobalAlert />
                         <LedgerConfirmActionModal />
                         {
@@ -324,7 +334,7 @@ class Routing extends Component {
                             <GuestLandingRoute
                                 exact
                                 path='/'
-                                render={(props) => <Wallet tab={tab} setTab={setTab} {...props} />}
+                                render={(props) => <WalletWrapper tab={tab} setTab={setTab} {...props} />}
                                 accountFound={accountFound}
                                 indexBySearchEngines={!accountFound}
                             />
@@ -521,6 +531,12 @@ class Routing extends Component {
                                 path='/buy'
                                 component={BuyNear}
                             />
+                            {CREATE_USN_CONTRACT &&    
+                            <PrivateRoute
+                                exact
+                                path="/swap-money"
+                                component={SwapContainerWrapper}
+                            />}
                             <Route
                                 exact
                                 path='/profile/:accountId'
@@ -580,7 +596,8 @@ const mapDispatchToProps = {
     redirectTo,
     fetchTokenFiatValues,
     handleClearAlert,
-    handleFlowLimitation
+    handleFlowLimitation,
+    getTokenWhiteList
 };
 
 const mapStateToProps = (state) => ({
